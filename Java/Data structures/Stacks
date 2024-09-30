@@ -1,0 +1,44 @@
+ /*
+Now, try to solve the below problem using stack :
+
+Given a string A consisting only of ’(‘ and ’)’.
+
+You need to find whether parantheses in A is balanced or not ,if it is balanced then print 1 else print 0.
+
+Examples of some correctly balanced strings are: “()()”, “((()))”, “((()))”
+
+Examples of some unbalanced strings are: “()(“, “(()))”, “((“, “)(“ etc.
+*/
+
+import java.lang.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // YOUR CODE GOES HERE
+        // Please take input and print output to standard input/output (stdin/stdout)
+        // DO NOT USE ARGUMENTS FOR INPUTS
+        // E.g. 'Scanner' for input & 'System.out' for output
+        
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        sc.nextLine();
+        for(int k=0;k<t;k++)
+        {
+            Stack<Character> st=new Stack<Character>();
+            String A=sc.nextLine();
+            for(int i=0;i<A.length();i++){
+            if(A.charAt(i)=='(') st.push(A.charAt(i));
+            else if(A.charAt(i)==')')
+            {
+                if(!st.isEmpty()) st.pop();
+                else{
+                    st.push(')');break;
+                }
+            }
+            }
+        if(st.isEmpty()) System.out.println("1");
+        else System.out.println("0");
+        }
+    }
+}
