@@ -1,0 +1,61 @@
+/* Task:
+
+You need to think of a data structure and implement it such that it can help you in answering the below-mentioned queries.
+
+You are given Q queries, in each query you are given two integers x and y:
+
+if x = 1 then insert the integer y to your data structure.
+if x = 2 then print an integer denoting the maximum element currently present in your data-structure, if there are no elements present then print -1
+if x = 3 then remove the maximum element currently present in your data structure, if there is no element present then don’t do anything.
+*/
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // Custom comparator to convert the min-heap to a max-heap
+        Comparator<Integer> maxHeapComparator = new Comparator<Integer>() {
+            @Override
+            public int compare(Integer a, Integer b) {
+                int value=a.compareTo(b);
+                if(value>0) return -1; // Reverses the order for max-heap
+                else if(value<0) return 1;
+                else return 0;
+            }
+        };
+
+        // Priority queue with custom comparator and initial capacity
+        PriorityQueue<Integer> pq = new PriorityQueue<>(11, maxHeapComparator);
+
+        // Scanner for reading input
+        Scanner sc = new Scanner(System.in);
+        int Q = sc.nextInt(); // Number of queries
+        sc.nextLine();
+        for (int i = 0; i < Q; i++) {
+            int x = sc.nextInt();
+            int y = sc.nextInt();
+                
+                sc.nextLine();
+            if (x == 1) {
+                // Insert y into the data structure
+                
+                pq.add(y);
+            } else if (x == 2) {
+                // Print the maximum element
+                if (pq.isEmpty()) {
+                    System.out.println("-1");
+                } else {
+                    System.out.println(pq.peek());
+                }
+            } else if (x == 3) {
+                // Remove the maximum element
+                
+                    pq.poll();
+                
+            }
+        }
+
+        // Close the scanner
+        sc.close();
+    }
+}
