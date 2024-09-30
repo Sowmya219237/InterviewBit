@@ -1,0 +1,39 @@
+/* Task:
+
+Complete the code given below.
+
+You need to answer Q queries, in each query you are given two integers x and y:
+
+if x = 1 then push the integer y  to the back of the queue.
+if x = 2 then return the front element of the queue if the queue is not empty else return -1
+if x = 3  then remove the front element from the queue if the queue is not empty else do nothing. No need to return anything in this query.
+*/
+
+import java.lang.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // YOUR CODE GOES HERE
+        // Please take input and print output to standard input/output (stdin/stdout)
+        // DO NOT USE ARGUMENTS FOR INPUTS
+        // E.g. 'Scanner' for input & 'System.out' for output
+        Scanner sc=new Scanner(System.in);
+        Queue<Integer> qu=new LinkedList<>();
+        int q=sc.nextInt();
+        for(int i=0;i<q;i++)
+        {
+            int x=sc.nextInt();
+            int y=sc.nextInt();
+            if(x==1) qu.add(y);
+            else if(x==2){
+                if(qu.isEmpty()) System.out.println("-1");
+                else System.out.println(qu.peek());
+            } 
+            
+            else if(x==3){
+              qu.remove();
+            }
+        }
+    }
+}
