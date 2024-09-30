@@ -1,0 +1,62 @@
+Task:
+
+As you have created a class pair in previous examples so here also we need to use that example.
+
+You are given N pairs and you need to sort them in Scaler Sorted Order.
+
+In Scaler Sorted Order you need to order the pairs in terms of decreasing value of second attribute and if second attribute of two object is same then order them in decreasing value of first attribute.
+
+Input and output is already handled in the snippet mentioned below, you just need to create pair class which:
+
+Has two integer attributes named first and second
+Has a parameterized constructor that accepts two integers a and b and initialized first with a and second with b.
+Has a comparator interface that sorts the array of objects of this class in Scaler Sorted Order.
+
+import java.lang.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        
+        /****Don't alter the code below*****/
+        Scanner in = new Scanner(System.in);
+        ArrayList<pair> arr = new ArrayList<pair>();
+        int n = in.nextInt();
+        in.nextLine();
+        for(int i = 0;i<n;i++)
+        {
+            int a = in.nextInt();
+            int b = in.nextInt();
+            arr.add(new pair(a,b));
+            in.nextLine();
+        }
+        in.close();
+        Collections.sort(arr,new sorting());
+        for(int i=0;i<n;i++)
+        {
+            System.out.println(arr.get(i).first + " " + arr.get(i).second);
+        }
+        /*********************************************************************/
+        
+    }
+}
+//your code goes here
+class pair {
+    int first;
+    int second;
+    pair(int f,int s)
+    {
+        this.first=f;
+        this.second=s;
+    }
+    
+    
+}
+class sorting implements Comparator<pair>{
+    public int compare(pair a,pair b)
+    {
+        if(a.second==b.second) return b.first-a.first;
+        else 
+        return b.second-a.second;
+    }
+}
