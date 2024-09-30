@@ -1,0 +1,23 @@
+/* Task:
+
+Take two numeric strings as input denoting two large integers and print their sum using 
+*/
+
+import java.lang.*;
+import java.util.*;
+import java.math.BigInteger;
+public class Main {
+    public static void main(String[] args) {
+        // YOUR CODE GOES HERE
+        // Please take input and print output to standard input/output (stdin/stdout)
+        // DO NOT USE ARGUMENTS FOR INPUTS
+        // E.g. 'Scanner' for input & 'System.out' for output
+        Scanner sc=new Scanner(System.in);
+        String s1=sc.next();
+        String s2=sc.next();
+        BigInteger a=new BigInteger(s1);
+        BigInteger b=new BigInteger(s2);
+        BigInteger c=a.add(b);
+        System.out.println(c);
+    }
+}
