@@ -1,0 +1,17 @@
+1)Given a table STUDY, query for all the attributes, which have marks greater than 80.
+select * from STUDY where Marks>80;
+
+2)Given a table Towns, query for all the Towns which have a Population greater than 1000.
+select * from Towns where Population >1000;
+
+3)Given a table STUDENT, query for all the Names with Class 1 and SubjectCount greater than 3.
+select Name from STUDENT where Class=1 and SubjectCount>3;
+
+4)Given a table COUNTRY, query for all the country names with Code NA.
+select Name from COUNTRY where Code="NA";
+
+5)Given a table STUDENTS, query for all the student’s Name and Class whose Age is greater than 15.
+select Name,Class from STUDENTS where Age>15;
+
+6)Given a table TOWNS, query for all the Town Names and Population, such that the ID is a multiple of 3.
+select TownName,Population from TOWNS where ID%3=0
