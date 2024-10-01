@@ -1,0 +1,80 @@
+1)Given a table FIREFIGHTERS, query the average of all the people saved by the Firefighters whose CountryCode is PM.
+select Avg(PeopleSaved) from FIREFIGHTERS where CountryCode="PM";
+
+2)Given a table FIREFIGHTERS, query the sum of all the people saved by the Firefighters whose CountryCode is PG.
+select Sum(PeopleSaved) from FIREFIGHTERS where COuntryCode="PG";
+
+3)Given a table FIREFIGHTERS, find the largest difference between the number of people saved by 2 firefighters.
+select Max(PeopleSaved)-Min(PeopleSaved) as A from FIREFIGHTERS;
+
+4)Given a table HOUSES, find the manhattan distance of the house which is the farthest from John’s house which lies at coordinates (20, 4).
+
+Basically you have to find the manhattan distance of some house which is the maximum amongst all the other houses from John’s house.
+
+Manhattan Distance between 2 points P(x1, y1), Q(x2, y2) is given as |x1 - x2| + |y1 - y2|.
+select Max(Abs(XCoordinate-20)+Abs(YCoordinate-4)) as A from HOUSES;
+
+5)Given a table HOUSES, find the euclidean distance between points with the largest X and Y coordinate, and the points with the smallest X and Y coordinate.
+
+The Euclidean Distance between 2 points P(x1, y1) and Q(x2, y2) is defined as: sqrt((x1 - x2)2 + (y1 - y2)2).
+SELECT sqrt(
+    pow(Max(XCoordinate)-Min(XCoordinate),2)+
+    pow(Max(YCoordinate)-Min(YCoordinate),2)) as A
+from HOUSES;
+
+6)Given a table WORKERS, find how many workers have the maximum total earnings among all the workers.
+
+The total earnings of a worker is calculated as Daily Wage * Number of Days Worked.
+select count(*) as A from WORKERS where DailyWage = (select max(DailyWage) from WORKERS);
+
+7)Given the ‘STUDENTS’ table. Write an SQL query to find the 5’th highest marks in the students table.
+select MARKS from STUDENTS order by MARKS DESC limit 1 offset 4;
+
+8)You are given 2 tables, One containing the available Books and the other containing the Books that have been bought by a customer. You have to find the Id’s of all the ‘Famous’ Books. A book is called ‘Famous’ if it is bought by at least 3 customers.
+select  BooksId as Id from BoughtBooks   group by BooksId having count(Id)>=3;
+
+9)A chess tournament is being held which consists of several matches between a player and a computer. After every match one player is declared as the winner.
+
+You are given two tables, One table consists of the players that will be playing the tournament while the other table consists of the matches that will be played in the tournament and its Result. The Result would be 1 if the player won the match, 0 otherwise. You have to output the names of the players who have won atleast one match and lost atmost one match.
+select Name from Players where Id in (select Id from Matches group by id having sum(Result=1)>=1 and sum(Result=0)<=1);
+
+10)You are given a table ‘Students’ which consists of the student information of every student along with the marks that they obtained in a test out of 100. However there were students who were Absent for the test, their marks section would contain ‘Absent’ word. Help the teacher arrange the students first based on their marks and second based on their first name.(You just have to output the names of the students).
+SELECT Name from Students order by
+CASE
+when Marks="Absent" then Null
+else Marks
+END
+Desc ,Name Asc;
+
+11)You are given a ‘Students’ table consisting of Id,Name and marks of two tests namely Marks1 and Marks2. The teacher wants to sort the table based on their marks(in descending order). However the teacher has a particular hate towards students whose Names starts with a vowel. Therefore the teacher would take the maximum of the two tests for students whose name doesn’t start with a vowel while sorting, and would take the minimum of the two tests for the students whose name starts with a vowel while sorting.
+SELECT 
+    Name
+FROM 
+    Students
+ORDER BY 
+    (CASE 
+        WHEN  Name  like 'a%' or   Name like 'e%' or  Name like 'i%' or  Name like 'o%' or
+          Name like 'u%' THEN least(Marks1,Marks2)
+        ELSE greatest(Marks1,Marks2)
+    END) DESC;
+
+12)You are given one table ‘Students’ which consists of Id,Name and Birthdate of students. Write an SQL query to find for each date the number of students having their birthday on that day and their names (seperated by commas). Also the Dates should be ordered in ascending order.
+select group_concat(DISTINCT Name) as Names from Students group by BirthDate  order by BirthDate;
+
+13)You are given a table ‘Students’ which consists of the marks that students from different classes obtained in the final exam. Write an SQL query to find for each departments the number of students who managed to score above total average (average considering students of all classes) . The output should be sorted by ClassId .
+select count(*) as A from Students where Marks>(select avg(Marks) from Students) group by ClassId;
+
+14)A tournament is being held where several matches takes place between a player from team 1 and a player from team 2. After every match one of the players is declared as the winner. However there are some players in Team2 who are known cheaters. Write an SQL Query to find the percentage of matches Won by Team1 against a non cheater from team 2 on every day. percentage of wins=(total games won against non cheaters)/(total games played against non cheaters). The percentage of wins should be rounded upto 4 decimals.
+
+Also the name of the output coloumn should be ‘Percentage Wins’. Also the output should be order ascending order of the Dates.
+select round((sum(case when m.Result=1 and t.Cheater=0 then 1 else 0 end)/sum(case when t.cheater=0 then 1 else 0 end)),4) as 'Percentage Wins'
+ from Matches m join Team2 t on m.PlayerId2=t.Id group by m.Date;
+
+15)You are given 3 tables namely ‘Students’ , ‘Departments’ and ‘Jobs’.
+
+Write an SQL query to find for each student their name and the date of the job offer. The output should be sorted by Department Names. Note that there might be students who did not receive a single offer, in such cases you should not include them in the output table.
+select concat(s.Name,',',j.Date) as Offers from Students s inner join Departments d on s.DepartmentId=d.DepartmentId inner join Jobs j on 
+s.Id=j.Id order by d.DepartmentName;
+
+16)Given a table Students. Write an SQL qurey to find for all students the marks which are immediately greater than the student’s marks . The output should have 1 column ‘Next’ and should contain the marks which are immediately greater than the student’s marks for each student which are Sorted by their Name.
+select lead(s.marks) over (order by Marks) Next from Students s order by s.Name;
