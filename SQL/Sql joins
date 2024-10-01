@@ -1,0 +1,27 @@
+1)You are given a table having the marks of one student in every test (Tests are held every day). You have to output the tests in which the student has improved his performance. For a student to improve his performance he has to score more than the previous test. Given that TestIDs are in increasing order, forming a continuous sequence without any missing numbers.
+select t2.TestId from Tests t1,Tests t2 where t1.TestId=t2.TestId-1 and t1.marks<t2.marks; 
+
+2)Given 2 tables ‘Students’ and ‘Departments’. Write an SQL query to find the students who has the Lowest GPA in each of the departments. 
+select concat(d.DepartmentName,',',s.Name,',',s.GPA) as A from Students s left join Departments d on s.DepartmentId=d.DepartmentId where s.GPA=
+(select min(s2.GPA) from Students s2 where s2.DepartmentId=d.DepartmentId )group by d.DepartmentName;
+
+3)Given 2 tables ‘Students’ and ‘Jobs’, write an SQL query to find for every student the number of offers they got in the month of November. The output should contain 1 coloumn by the name ‘Job_Offers’ which should contain the number of jobs received by each of the student in the month of November. Also it should be sorted by the Id of the students.
+select count(j.Id) as Job_Offers  from Students s left join Jobs j on s.Id=j.Id 
+and month(j.Date)='11' group by s.Id order by s.Id;
+
+4)Write a SQL Query to find the name of all reviewers who have rated their ratings with a NULL value.
+select r.reviewer_name from reviewers r inner join ratings rt on r.reviewer_id=rt.reviewer_id where rt.reviewer_stars
+IS NULL;
+
+5)Write a SQL Query to find the movie_title and name of director (first and last names combined) who directed a movie that casted a role as ‘SeanMaguire’.
+select  CONCAT(d.director_first_name, d.director_last_name) director_name,m.movie_title from movies_cast mc inner join  movies m on mc.movie_id = m.movie_id 
+ inner join movies_directors md  on m.movie_id=md.movie_id inner join directors d 
+ on d.director_id=md.director_id where mc.role="SeanMaguire";
+
+6)Write a SQL Query to find those lowest duration movies along with the year, director’s name(first and last name combined), actor’s name(first and last name combined) and his/her role in that production.
+select m.movie_title as movie_title,m.movie_year as movie_year,CONCAT(d.director_first_name,d.director_last_name) as director_name,concat(a.actor_first_name,a.actor_last_name) as actor_name,mc.role as role from movies m 
+inner join movies_cast mc on m.movie_id=mc.movie_id
+inner join actors a on mc.actor_id=a.actor_id
+inner join movies_directors md on m.movie_id=md.movie_id
+inner join directors d on md.director_id=d.director_id
+where m.movie_time=(select min(movie_time) from movies);
