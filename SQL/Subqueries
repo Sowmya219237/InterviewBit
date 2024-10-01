@@ -1,17 +1,25 @@
 1)Given a table STUDY, query for all the attributes, which have marks greater than 80.
 select * from STUDY where Marks>80;
 
-2)Given a table Towns, query for all the Towns which have a Population greater than 1000.
-select * from Towns where Population >1000;
+2)Given a table STUDY, update the marks of all the students to 50, whose marks lie in the range 25 - 50 (excluding 25 , including 50 i.e. (25,50] ) . Then print the new table.
+select ID,Name,Age,
+(case 
+when  Marks>25 and Marks<=50 then 50
+else Marks
+end) as Marks
+from STUDY;
 
-3)Given a table STUDENT, query for all the Names with Class 1 and SubjectCount greater than 3.
-select Name from STUDENT where Class=1 and SubjectCount>3;
+3)Given a table STUDY, delete all the entries in the table where the AGE of the students lies between 19-22. Then print the new table.
+delete from STUDY where Age between 19 and 22;
+select * from STUDY;
 
-4)Given a table COUNTRY, query for all the country names with Code NA.
-select Name from COUNTRY where Code="NA";
+4)You are given 3 tables namely ‘Students’ , ‘Departments’ and ‘Jobs’.
 
-5)Given a table STUDENTS, query for all the student’s Name and Class whose Age is greater than 15.
-select Name,Class from STUDENTS where Age>15;
+Write an SQL query to find sum of Distinct salaries obtained by students from ‘CSE’ department. The output should be sorted by the Department names.
+select sum(Distinct Salary) as Salary  from Jobs where Id in (select Id from Students where DepartmentId in 
+(select DepartmentId from Departments where DepartmentName="CSE"));
 
-6)Given a table TOWNS, query for all the Town Names and Population, such that the ID is a multiple of 3.
-select TownName,Population from TOWNS where ID%3=0
+5)Write a SQL Query to find the name of those movies where one or more actors acted in two or more movies.
+select movie_title from movies where movie_id in(select movie_id from movies_cast where actor_id in(
+    select actor_id from actors where actor_id in (select actor_id from movies_cast group by actor_id having count(*)>=2)
+));
