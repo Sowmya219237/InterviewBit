@@ -1,0 +1,21 @@
+1)Given 2 tables ENGINEER and DATA, query the sum of Count of all the engineers whose Type is FrontEnd.
+select sum(e.count) as A from ENGINEER e inner join DATA d on e.Id=d.Id where d.Type="FrontENd";
+2)Given 2 tables ENGINEER and DATA, query for the total count of each Type in the ENGINEER table. Print the result in alphabetical order of the Type.
+select sum(e.count) as A from ENGINEER e left join DATA d on e.Id=d.Id group by d.Type;
+3)Given 2 tables EMPLOYEE and EVALUATION, build a report containing the 2 columns, Name and Rating. Employees with Ratings less than 6 should appear as NULL in the table. The entries in the table should be sorted by descending order of Rating, followed by Names in lexicographic order.
+select
+case
+when ev.Rating <6 then NULL
+else emp.Name
+end as Names,ev.Rating as Rating
+from EMPLOYEE 
+emp left join EVALUATION ev on emp.Points between ev.Lower and ev.Upper order by ev.Rating desc,emp.Name asc
+;
+4)Given 2 tables EMPLOYEE and EVALUATION, query for the count of names whose Rating is less than 3. Also, query for the count of names whose Rating is greater than 8.
+select count(Rating) as 'COUNT(Name)'
+from  EVALUATION ev  where ev.Rating<=3;
+select count(Rating) as 'COUNT(Name)'
+from  EVALUATION ev  where ev.Rating>=8;
+5)Given a table LABOURERS, match all the pairs of Labourers that are from the same country, along with the country name. Keep the ordering by Name of the first laborer, then second laborer, and then Country name. 
+select l1.Name as Labourer1 , l2.Name as Labourer2 , l1.country as Country from LABOURERS l1 inner join LABOURERS l2 on l1.Country=l2.Country 
+where l1.Name <> l2.Name order by l1.Name,l2.Name,l1.Country;
